@@ -44,18 +44,31 @@ class Battery:
         return f"Battery(capacity_wh={self.capacity_wh}, state_of_charge={self.state_of_charge}, max_discharge_rate_w={self.max_discharge_rate_w})"
     
     # Die Charge Methode Lädt die Batterie um amount_wh auf und aktualisiert den Ladestand
-    def charge(self,amout_wh:float):
-        new_Energy = self.capacity_wh * self.state_of_charge + amout_wh
-        self.state_of_charge = min(new_Energy/ self.capacity_wh,1,0)
+    def charge(self,amount_wh:float):
+        new_Energy = self.capacity_wh * self.state_of_charge + amount_wh
+        self.state_of_charge = min(new_Energy/ self.capacity_wh,1.0)
     
     def discharge(self,amount_wh:float):
-        if amount_wh < self.state_of_charge * self.capacity_wh:
+        if amount_wh > self.state_of_charge * self.capacity_wh:
             return False
         self.state_of_charge = self.state_of_charge - amount_wh/ self.capacity_wh
         return True
-    class ScoutBot(Robot):
-    class HeavyBot(Robot):
-    class TechBot(Robot):
+    
+class ScoutBot(Robot):
+    Energy_per_meter_wh = 0.5
+    def__init__(self, name, color, Battery):
+        super().__init__(name,color,Battery)
+        
+   # Magic-Method für die String-Repräsentation des Objekts
+    def __str__(self):
+        return f"ScoutBot {self.name} ({self.serial_number}) ist {self.color} steht hier: {self.position} und Batterie Level{self.battery.state_of_charge  * 100:.1f}"   
+    
+    # Magic-Method für die offizielle Repräsentation des Objekts
+    def __repr__(self):
+        return f"ScoutBot(name='{self.name}', color='{self.color}', position='{self.position}', serial_number='{self.serial_number}',state_of_charge'{self.battery.state_of_charge* 100:.1f}'" 
+           # Effekt = 
+    #class HeavyBot(Robot):
+    #class TechBot(Robot):
     
 
 # Erstellen von Instanzen der Klasse Robot
