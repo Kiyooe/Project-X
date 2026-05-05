@@ -19,18 +19,15 @@ class Robot:
     def __repr__(self):
         return f"Robot(name='{self.name}', color='{self.color}', position='{self.position}', serial_number='{self.serial_number}'"   
     
-    # Methode zum Bewegen des Roboters an eine neue Position
-    def move(self, new_position):
-        self.position = new_position
 
-    # Mögliche neue def move
-    # def move(self, new_position, distance_m):
-    # energy = distance_m * self.energy_per_meter_wh
-    # if not self.battery.discharge(energy):
-    #     print(f"{self.name} hat nicht genug Energie!")
-    #     return False
-    # self.position = new_position
-    # return True
+    #Methode zum Bewegen des Roboters an eine neue Position
+    def move(self, new_position, distance_m):
+        energy = distance_m * self.energy_per_meter_wh
+        if not self.battery.discharge(energy):
+            print(f"{self.name} hat nicht genug Energie!")
+            return False
+        self.position = new_position
+        return True
 
 class Battery:
     def __init__(self,capacity_wh:float ,state_of_charge:float = 1 ,max_discharge_rate_w:float = 50):
